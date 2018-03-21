@@ -1,0 +1,33 @@
+{
+  "name": "super-awesome-utility-api",
+  "private": true,
+  "version": "1.0.2",
+  "description": "simple express server with JSON api built with es6 syntax",
+  "main": "src",
+  "scripts": {
+    "dev": "nodemon src",
+    "start": "node src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshterrill/super-awesome-utility-api.git"
+  },
+  "keywords": [],
+  "author": "Josh Terrill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshterrill/super-awesome-utility-api/issues"
+  },
+  "homepage": "https://github.com/joshterrill/super-awesome-utility-api#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.13.3",
+    "fake-identity": "^1.0.6",
+    "mongodb": "^3.0.4",
+    "morgan": "^1.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
+  }
+}
