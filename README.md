@@ -64,6 +64,13 @@ GET /api/database/:collectionName
 Content-Type: application/json
 ```
 
+#### Get a single object saved in collection
+
+```
+GET /api/database/:collectionName/:id
+Content-Type: application/json
+```
+
 #### Delete object in collection
 
 ```
