@@ -3,6 +3,10 @@ const mongodb = require('mongodb');
 const version = require('../../package.json').version;
 const Identity = require('fake-identity');
 
+Date.prototype.subtractMinutes = function(minutes) {
+  var copiedDate = new Date(this.getTime());
+  return new Date(copiedDate.getTime() - minutes * 60000);
+}
 
 module.exports = (db) => {
   const api = Router();

@@ -3,9 +3,11 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const mongodb = require('mongodb');
+const cron = require('node-cron');
 const MongoClient = mongodb.MongoClient;
 const api = require('./api');
 const log = require('./util/log');
+const clean = require('./util/clean');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,5 +37,9 @@ MongoClient.connect(process.env.MLAB_URL, (err, client) => {
       });
     });
     app.use(api(db));
+    // run cron every 2 minutes
+    cron.schedule('*/2 * * * *', () => {
+      clean.cleanDb(db);
+    });
   });
 });
