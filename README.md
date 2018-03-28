@@ -4,7 +4,6 @@ A super awesome utility API that has various endpoints that are useful during de
 
 ## Todo
 
-* Delete collections that have been inactive for 30 minutes.
 * Add more useful endpoints
 
 
