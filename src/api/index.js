@@ -18,22 +18,22 @@ module.exports = (db) => {
   api.get('/api/generate-identity', (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.ip;
     const data = Identity.generate();
-    res.json({success: true, data, error: null});
+    res.json(data);
   });
 
   api.get('/api/generate-identity/:number', (req, res) => {
     const data = Identity.generate(+req.params.number);
-    res.json({success: true, data, error: null});
+    res.json(data);
   });
 
-  api.post('/api/database/:collection', (req, res) => {
+  api.post('/api/database/:collection', async (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.ip;
     const collection = `${ip}-${req.params.collection}`;
-    db.collection(collection).insertOne(req.body, (error, result) => {
-      if (error) res.json({success: false, data: null, error});
+    const insert = await db.collection(collection).insertOne(req.body, (error, result) => {
+      if (error) throw new Error(error);
       db.collection(collection).findOne({_id: result.insertedId}, (err, data) => {
-        if (error) res.json({success: false, data: null, error});
-        res.json({success: true, data, error: null});
+        if (err) throw new Error(err);
+        res.json(data);
       });
     });
   });
@@ -42,8 +42,8 @@ module.exports = (db) => {
     const ip = req.headers['x-forwarded-for'] || req.ip;
     const collection = `${ip}-${req.params.collection}`;
     db.collection(collection).find({}).toArray((error, data) => {
-      if (error) res.json({success: false, data: null, error});
-      res.json({success: true, data, error: null});
+      if (error) throw new Error(error);
+      res.json(data);
     })
   });
 
@@ -51,8 +51,8 @@ module.exports = (db) => {
     const ip = req.headers['x-forwarded-for'] || req.ip;
     const collection = `${ip}-${req.params.collection}`;
     db.collection(collection).findOne({_id: new mongodb.ObjectID(req.params.id)}, (error, data) => {
-      if (error) res.json({success: false, data: null, error});
-      res.json({success: true, data, error: null});
+      if (error) throw new Error(error);
+      res.json(data);
     });
   });
 
@@ -60,10 +60,10 @@ module.exports = (db) => {
     const ip = req.headers['x-forwarded-for'] || req.ip;
     const collection = `${ip}-${req.params.collection}`;
     db.collection(collection).update({_id: new mongodb.ObjectID(req.params.id)}, req.body, {upsert: true}, (error, result) => {
-      if (error) res.json({success: false, data: null, error});
-      db.collection(collection).findOne({_id: new mongodb.ObjectID(req.params.id)}, (error, data) => {
-        if (error) res.json({success: false, data: null, error});
-        res.json({success: true, data, error: null});
+      if (error) throw new Error(error);
+      db.collection(collection).findOne({_id: new mongodb.ObjectID(req.params.id)}, (err, data) => {
+        if (err) throw new Error(err);
+        res.json(data);
       });
     });
   });
@@ -72,8 +72,8 @@ module.exports = (db) => {
     const ip = req.headers['x-forwarded-for'] || req.ip;
     const collection = `${ip}-${req.params.collection}`;
     db.collection(collection).remove({_id: new mongodb.ObjectID(req.params.id)}, (error, result) => {
-      if (error) res.json({success: false, data: null, error});
-      res.json({success: true, data: null, error: null});
+      if (error) throw new Error(error);
+      res.json(data);
     });
   });
 
