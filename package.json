@@ -25,7 +25,7 @@
     "express": "^4.13.3",
     "fake-identity": "^1.0.6",
     "mongodb": "^3.1.13",
-    "morgan": "^1.6.1",
+    "morgan": "^1.9.1",
     "node-cron": "^1.2.1"
   },
   "devDependencies": {
